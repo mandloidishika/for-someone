@@ -1,0 +1,717 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f1ddd8">
+<title>For My Favourite Person ♡</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap');
+
+:root{
+  --cream:#f4e8dc; --paper:#f7eee5; --pink:#d99ca5; --pink2:#efcacc;
+  --brown:#775f56; --ink:#2c2220; --dark:#181211;
+  --shadow:0 18px 50px rgba(61,40,31,.18);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#d6c1b5;color:var(--ink);
+  font-family:Caveat,cursive;overflow-x:hidden;
+}
+body:before{
+  content:"";position:fixed;inset:0;z-index:50;pointer-events:none;opacity:.10;
+  background-image:radial-gradient(#5e4b43 .55px,transparent .55px),radial-gradient(#fff .55px,transparent .55px);
+  background-size:13px 13px,17px 17px;background-position:0 0,5px 7px;
+  mix-blend-mode:multiply;
+}
+*::-webkit-scrollbar{width:7px}
+*::-webkit-scrollbar-thumb{background:#c49499;border-radius:20px}
+
+button{font:inherit}
+img{max-width:100%}
+a{text-decoration:none;color:inherit}
+
+/* ---------- INTRO ---------- */
+.intro{
+  position:fixed;inset:0;z-index:200;
+  display:grid;place-items:center;
+  width:100vw;height:100svh;min-height:100vh;
+  padding:clamp(18px,4vw,55px);
+  background:
+    radial-gradient(circle at 15% 15%,#f6dfe0 0 7%,transparent 25%),
+    radial-gradient(circle at 85% 80%,#ead0c8 0 8%,transparent 28%),
+    linear-gradient(135deg,#f3e4d9,#e6cbc5);
+  transition:opacity .8s ease,visibility .8s ease;
+}
+.intro:before{
+  content:"";position:absolute;inset:clamp(10px,2vw,28px);
+  border:1px dashed #7b5d523d;pointer-events:none;
+}
+.intro.hide{opacity:0;visibility:hidden;pointer-events:none}
+.intro-card{
+  width:min(680px,92vw);
+  height:min(760px,calc(100svh - 28px));
+  max-height:calc(100svh - 28px);
+  padding:clamp(18px,2.6vh,30px) clamp(18px,4vw,42px);
+  background:rgba(250,240,231,.96);
+  box-shadow:0 30px 90px rgba(75,49,40,.20);
+  border:1px solid #765a4b25;border-radius:10px;text-align:center;
+  position:relative;overflow:hidden;overflow-y:auto;
+  display:flex;flex-direction:column;justify-content:center;align-items:center;
+}
+.intro-card:before{
+  content:"";position:absolute;inset:14px;border:1px dashed #80696055;
+  pointer-events:none;
+}
+.intro-card:after{content:"";position:absolute;inset:12px;border:1px dashed #80696055;pointer-events:none}
+.bow{font-size:clamp(34px,6vh,52px);animation:float 2.5s ease-in-out infinite;line-height:1}
+.intro-card h1{font:400 clamp(28px,5vw,44px)/.95 "DM Serif Display",serif;margin:8px 0}
+.intro-card p{font-size:clamp(19px,2.5vw,25px);margin:7px}
+.code-row{display:flex;justify-content:center;gap:7px;margin:9px 0}
+.code-box{width:45px;height:45px;border:1.5px solid #8c746b;border-radius:8px;display:grid;place-items:center;font-size:25px;background:#fff6ed}
+.keypad{display:grid;grid-template-columns:repeat(3,48px);gap:6px;justify-content:center}
+.keypad button{
+  width:48px;height:48px;border:0;border-radius:50%;background:var(--pink);
+  color:#352826;font-size:24px;cursor:pointer;box-shadow:0 4px 0 #80525a2b;transition:.18s;
+}
+.keypad button:hover{transform:translateY(-3px) scale(1.03)}
+.unlock,.primary{
+  margin-top:9px;padding:10px 25px;border:1px solid #705951;border-radius:30px;
+  background:transparent;color:inherit;font-size:24px;cursor:pointer
+}
+.hint{font-size:16px;color:#796760;margin-top:8px}
+
+
+/* ---------- PASSWORD SUCCESS GATE ---------- */
+.gate-page{
+  position:fixed;inset:0;z-index:190;display:none;
+  width:100vw;height:100svh;min-height:100vh;
+  padding:clamp(18px,4vw,55px);
+  align-items:center;justify-content:center;overflow:hidden;
+}
+.gate-page.show{display:flex}
+.gate-inner{
+  width:min(900px,94vw);min-height:min(760px,90svh);
+  padding:clamp(35px,6vw,80px) clamp(22px,6vw,75px);
+  background:rgba(250,240,231,.96);
+  border:1px solid #765a4b25;box-shadow:0 30px 80px rgba(75,49,40,.20);
+  position:relative;text-align:center;display:grid;place-items:center;
+  align-content:center;
+}
+.gate-inner:before{
+  content:"";position:absolute;inset:14px;border:1px dashed #80696055;
+  pointer-events:none;
+}
+.gate-decor{
+  position:absolute;top:28px;right:30px;font-size:25px;letter-spacing:10px;
+}
+.gate-buttons{
+  display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin:25px 0 8px;
+}
+.site.locked{display:none}
+.site.unlocked{display:block}
+@media(max-width:600px){
+  .gate-page{padding:12px}
+  .gate-inner{min-height:94svh;padding:35px 18px}
+  .gate-decor{top:22px;right:18px;font-size:20px}
+}
+
+/* ---------- GLOBAL ---------- */
+.site{max-width:1320px;margin:auto;background:#bba79a;box-shadow:0 0 60px #5b403455}
+.page{
+  min-height:100svh;padding:clamp(35px,6vw,90px) clamp(15px,4vw,55px);
+  position:relative;display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+.page.paper-bg{
+  background:
+    radial-gradient(circle at 10% 20%,#fff8 0 2%,transparent 18%),
+    repeating-linear-gradient(0deg,transparent 0 5px,#6d51450b 6px 7px),
+    var(--paper);
+}
+.page.dark{background:radial-gradient(circle at 30% 15%,#3a2925,#130f0e 70%);color:#fff4eb}
+.page.pink{background:linear-gradient(135deg,#f5dfda,#e9c5c9)}
+.inner{
+  width:min(1120px,100%);min-height:min(82svh,780px);
+  position:relative;overflow:hidden;padding:clamp(35px,5vw,75px);
+  border:1px solid #765a4b22;box-shadow:var(--shadow);
+}
+.page.paper-bg .inner{
+  background:var(--paper2);
+  background-image:repeating-linear-gradient(0deg,transparent 0 6px,#6d514508 7px 8px);
+}
+.inner:before{
+  content:"";position:absolute;inset:13px;border:1px dashed #7a5c4e30;pointer-events:none;
+}
+.center{text-align:center;display:grid;place-items:center}
+.content{position:relative;z-index:2;width:100%}
+.script{font:400 clamp(38px,5.8vw,72px)/.94 "DM Serif Display",serif}
+.hand{font-size:clamp(23px,3vw,35px);line-height:1.05}
+.tiny{font-size:19px;color:var(--brown)}
+.dark .tiny{color:#d9c8c0}
+.sticker{font-size:clamp(55px,8vw,90px);animation:float 2.5s ease-in-out infinite}
+.heart{font-size:55px;animation:pulse 1.6s ease-in-out infinite}
+.tape{
+  position:absolute;width:85px;height:25px;background:#d8b98eaa;z-index:5;
+  transform:rotate(-7deg);box-shadow:0 2px 3px #0001;
+}
+.corner{position:absolute;font-size:30px;z-index:3}
+
+/* ---------- ANIMATIONS ---------- */
+.reveal{opacity:0;transform:translateY(45px) scale(.97);transition:opacity .9s,transform .9s}
+.reveal.visible{opacity:1;transform:none}
+.floaty{animation:float 3s ease-in-out infinite}
+.pulse{animation:pulse 1.7s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-9px) rotate(2deg)}}
+@keyframes pulse{50%{transform:scale(1.08)}}
+@keyframes wiggle{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+.wiggle{animation:wiggle 1.8s ease-in-out infinite}
+@keyframes sparkle{0%,100%{opacity:.4;transform:scale(.8)}50%{opacity:1;transform:scale(1.1)}}
+.sparkle{animation:sparkle 1.8s ease-in-out infinite}
+
+/* ---------- WRONG PASSWORD PAGE ---------- */
+.sad-page{
+  display:flex;position:fixed;inset:0;z-index:220;
+  min-height:100svh;padding:28px 15px;
+  opacity:0;visibility:hidden;pointer-events:none;
+  transform:scale(.98);
+  transition:opacity .35s ease,transform .35s ease,visibility 0s .35s;
+}
+.sad-page.show{
+  opacity:1;visibility:visible;pointer-events:auto;transform:none;
+  transition:opacity .35s ease,transform .35s ease,visibility 0s;
+}
+.sad-sticker{
+  width:min(240px,60vw);height:min(240px,60vw);margin:auto;
+  display:grid;place-items:center;font-size:120px;
+  background:#ffffff45;border-radius:45% 55% 50% 45%;
+  border:2px dashed #80655d55;
+}
+.sad-sticker img{width:100%;height:100%;object-fit:contain}
+.sticker-note{
+  max-width:650px;margin:20px auto 0;padding:18px 25px;
+  background:#fff6ea;box-shadow:0 12px 25px #0002;
+  font-size:clamp(25px,4vw,38px);transform:rotate(-1deg);
+}
+
+/* ---------- HERO ---------- */
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:45px;align-items:center}
+.hero-photo{
+  width:82%;aspect-ratio:4/5;object-fit:cover;margin:auto;
+  border:10px solid #fffaf4;box-shadow:0 18px 30px #0003;transform:rotate(-3deg)
+}
+.hero-copy{text-align:center}
+
+/* ---------- POLAROIDS ---------- */
+.polaroids{position:relative;height:600px;max-width:900px;margin:15px auto}
+.polaroid{
+  position:absolute;width:35%;padding:9px 9px 31px;background:#fffaf4;
+  box-shadow:0 14px 25px #0003;transition:.45s;
+}
+.polaroid:hover{z-index:10;transform:rotate(0) scale(1.05)!important}
+.polaroid img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block}
+.polaroid span{font-size:20px;display:block;margin-top:5px}
+.a{left:3%;top:4%;transform:rotate(-6deg)}
+.b{right:4%;top:10%;transform:rotate(6deg)}
+.c{left:27%;bottom:5%;transform:rotate(-2deg)}
+.d{right:22%;bottom:2%;transform:rotate(4deg)}
+
+/* ---------- REASONS ---------- */
+.reason-grid{display:grid;grid-template-columns:1fr 1fr;gap:17px;max-width:850px;margin:35px auto}
+.reason{
+  min-height:140px;padding:24px 18px;display:grid;place-items:center;text-align:center;
+  font-size:24px;line-height:1;background:#e9b9b1;box-shadow:0 9px 18px #0002;
+  transform:rotate(-2deg);transition:.4s
+}
+.reason:hover{transform:rotate(0) translateY(-5px)}
+.reason:nth-child(2){background:#cbdcd2;transform:rotate(2deg)}
+.reason:nth-child(3){background:#ead6a7;transform:rotate(2deg)}
+.reason:nth-child(4){background:#d9a8b0;transform:rotate(-3deg)}
+
+/* ---------- TIMELINE ---------- */
+.timeline{max-width:700px;margin:30px auto;padding-left:48px;position:relative}
+.timeline:before{content:"";position:absolute;left:18px;top:0;bottom:0;border-left:2px dotted #8a7066}
+.event{position:relative;margin:25px 0;font-size:25px;line-height:1.05}
+.event:before{content:"";position:absolute;left:-36px;top:8px;width:14px;height:14px;background:#cd8f98;border-radius:50%;box-shadow:0 0 0 5px #cd8f9830}
+.event b{font-size:31px}
+
+/* ---------- LETTER ---------- */
+.letter{
+  max-width:800px;margin:auto;padding:clamp(25px,5vw,50px);
+  background:#fbf0e0;border:1px solid #cdb9a6;box-shadow:0 12px 25px #0002;
+  font-size:clamp(20px,2.4vw,27px);line-height:1.08;white-space:pre-line
+}
+.letter h2{font:400 36px "DM Serif Display",serif;margin:0 0 18px}
+
+/* ---------- NO PAGE / CUSTOM STICKER ---------- */
+.no-page{
+  background:linear-gradient(135deg,#f7e4df,#e9c9cb)!important;
+}
+.custom-sticker{
+  width:min(290px,65vw);height:min(290px,65vw);margin:auto;
+  display:grid;place-items:center;overflow:hidden;
+  background:#fff8ee66;border-radius:50%;border:2px dashed #8c686455;
+}
+.custom-sticker img{width:100%;height:100%;object-fit:contain}
+.custom-sticker .placeholder{font-size:115px}
+.threat{
+  margin:25px auto;max-width:700px;padding:20px 28px;background:#fff7ed;
+  box-shadow:0 12px 25px #0002;font-size:clamp(27px,4.5vw,45px);
+  transform:rotate(-1.5deg)
+}
+.yes-btn{
+  border:0;border-radius:30px;background:#d9969f;padding:12px 30px;
+  font-size:26px;cursor:pointer;box-shadow:0 7px 15px #0002
+}
+
+/* ---------- MUSIC ---------- */
+.player{
+  max-width:650px;margin:35px auto;background:#f8eee5;color:#322724;
+  padding:20px;border-radius:18px;box-shadow:0 15px 30px #0004
+}
+.player-row{display:flex;align-items:center;gap:12px}
+.player button{border:0;background:none;font-size:30px;cursor:pointer}
+.player input{width:100%;accent-color:#ba7b83}
+.song-frame{position:relative;width:100%;aspect-ratio:16/9;margin-top:14px;border-radius:14px;overflow:hidden;background:#17110f;box-shadow:0 10px 25px #0003}
+.song-frame iframe{width:100%;height:100%;border:0;display:block}
+
+/* ---------- FINAL ---------- */
+.final-photo{
+  width:min(390px,70%);aspect-ratio:4/5;object-fit:cover;
+  border:10px solid #fff8f0;box-shadow:0 18px 30px #0005;transform:rotate(-3deg)
+}
+.final-buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ---------- FLOATING UI ---------- */
+.scroll-hint{
+  position:fixed;right:20px;bottom:20px;z-index:45;
+  width:52px;height:52px;border:0;border-radius:50%;background:#f0c9ca;
+  color:#3b2c29;font-size:25px;cursor:pointer;box-shadow:0 9px 20px #0003;
+  animation:float 2s infinite
+}
+.music-button{
+  position:fixed;right:20px;top:20px;z-index:45;
+  width:47px;height:47px;border:0;border-radius:50%;background:#f0c9ca;
+  color:#3b2c29;font-size:20px;cursor:pointer;box-shadow:0 9px 20px #0003
+}
+.toast{
+  position:fixed;left:50%;bottom:85px;z-index:120;
+  transform:translate(-50%,20px);opacity:0;pointer-events:none;
+  background:#fff2e7;color:#352725;padding:12px 20px;border-radius:30px;
+  font-size:21px;box-shadow:0 10px 25px #0004;transition:.3s
+}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:800px){
+  .hero{grid-template-columns:1fr;gap:20px}
+  .hero-photo{width:62%;max-height:48vh}
+  .polaroids{height:500px}
+}
+@media(max-width:600px){
+  .page{min-height:100svh;padding:28px 8px}
+  .inner{min-height:calc(100svh - 56px);padding:35px 19px}
+  .inner:before{inset:8px}
+  .hero-photo{width:70%;max-height:42vh}
+  .polaroids{height:470px}
+  .polaroid{width:46%;padding:6px 6px 22px}
+  .polaroid span{font-size:16px}
+  .reason-grid{grid-template-columns:1fr;gap:11px;margin:25px auto}
+  .reason{min-height:105px;font-size:21px}
+  .timeline{padding-left:38px}
+  .event{font-size:21px;margin:20px 0}
+  .event b{font-size:27px}
+  .letter{font-size:20px;padding:23px 17px}
+  .final-photo{width:72%}
+  .scroll-hint{right:12px;bottom:12px}
+  .music-button{right:12px;top:12px}
+}
+@media(max-width:380px){
+  .intro{padding:8px}
+  .intro-card{max-height:calc(100svh - 16px);padding:18px 13px}
+  .keypad{grid-template-columns:repeat(3,47px);gap:6px}
+  .keypad button{width:47px;height:47px}
+  .code-box{width:40px;height:42px}
+  .intro-card h1{font-size:30px}
+  .intro-card p{font-size:18px}
+  .unlock{font-size:20px;padding:8px 22px}
+  .polaroids{height:410px}
+}
+</style>
+</head>
+<body>
+
+<!-- =========================
+     PASSCODE
+     ========================= -->
+<div class="intro" id="intro">
+  <div class="intro-card">
+    <div class="bow">🎀</div>
+    <p>psst... this is for you ♡</p>
+    <h1>Happy Boyfriend's Day</h1>
+    <p>Enter the secret code</p>
+    <div class="code-row" id="codeRow">
+      <span class="code-box"></span><span class="code-box"></span>
+      <span class="code-box"></span><span class="code-box"></span>
+    </div>
+    <div class="keypad" id="keypad"></div>
+    <button class="unlock" id="unlock">unlock ♡</button>
+    <div class="hint">Hint: the day we became “us” ♡</div>
+  </div>
+</div>
+
+<!-- =========================
+     WRONG PASSWORD PAGE
+     ========================= -->
+<section class="page sad-page paper-bg" id="wrongPage">
+  <div class="inner center">
+    <div class="content">
+      <div class="sad-sticker">
+        <img src="stickers/sad.webp" alt="cute sad sticker">
+      </div>
+      <div class="sticker-note">
+        Ohh sorry... wrong password 😭💗<br>
+        You have to try again!
+      </div>
+      <button class="primary" onclick="closeWrong()">try again ♡</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- =========================
+     PASSWORD SUCCESS -> YES/NO GATE
+     ========================= -->
+<section class="gate-page paper-bg" id="gatePage">
+  <div class="gate-inner">
+    <div class="gate-decor">♡ ✦ ♡</div>
+    <div class="sticker floaty">🎁</div>
+    <p class="tiny">psst... you got it right ♡</p>
+    <h1 class="script">I made something<br>special for you...</h1>
+    <p class="hand">Do you want to see what I made for you?</p>
+    <div class="gate-buttons">
+      <button class="yes-btn" id="gateYes">YES ♡</button>
+      <button class="primary" id="gateNo">NO ♡</button>
+    </div>
+    <p class="tiny">(you sure? it's really special though ♡)</p>
+  </div>
+</section>
+
+<main class="site locked" id="site">
+
+  <!-- PAGE 1 -->
+  <section class="page paper-bg">
+    <div class="inner center reveal">
+      <div class="tape" style="left:7%;top:20px"></div>
+      <div class="corner" style="left:5%;top:7%">♡</div>
+      <div class="corner" style="right:6%;bottom:7%">✦</div>
+      <div class="content">
+        <div class="sticker">🐰💗</div>
+        <h1 class="script">Okay...</h1>
+        <p class="script" style="font-size:clamp(28px,4vw,48px)">then this is for you ♡</p>
+        <p class="hand">I made a tiny little corner of the internet just for us.</p>
+        <p class="tiny">scroll slowly, okay? ♡</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3 -->
+  <section class="page paper-bg" id="afterYes">
+    <div class="inner">
+      <div class="content">
+        <div class="hero">
+          <img class="hero-photo reveal" src="images/photo1.jpg" alt="Our favourite photo">
+          <div class="hero-copy reveal">
+            <div class="tiny">Boyfriend's Day ♡</div>
+            <h1 class="script">To my<br>favourite person</h1>
+            <p class="hand">You make life so much softer.</p>
+            <p class="hand">grateful for you, always ♡</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 4 MEMORIES -->
+  <section class="page pink">
+    <div class="inner">
+      <div class="content">
+        <h1 class="script" style="text-align:center">Some moments ♡</h1>
+        <p class="hand" style="text-align:center">that mean everything to me</p>
+        <div class="polaroids">
+          <div class="polaroid a reveal"><img src="images/photo2.jpg" alt=""><span>just us ♡</span></div>
+          <div class="polaroid b reveal"><img src="images/photo3.jpg" alt=""><span>one of my favourites</span></div>
+          <div class="polaroid c reveal"><img src="images/photo4.jpg" alt=""><span>you + me</span></div>
+          <div class="polaroid d reveal"><img src="images/photo5.jpg" alt=""><span>always ♡</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 5 REASONS -->
+  <section class="page paper-bg">
+    <div class="inner">
+      <div class="content">
+        <h1 class="script" style="text-align:center">Reasons you're my<br>favourite person ♡</h1>
+        <div class="reason-grid">
+          <div class="reason reveal">Your smile can turn my bad day into a good one.</div>
+          <div class="reason reveal">The way you support me in everything I do.</div>
+          <div class="reason reveal">Your silly jokes — even when they're not funny.</div>
+          <div class="reason reveal">You make everything feel easier.</div>
+        </div>
+        <p class="hand" style="text-align:center">...and I could keep going forever ♡</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 6 STORY -->
+  <section class="page paper-bg">
+    <div class="inner">
+      <div class="content">
+        <h1 class="script" style="text-align:center">Our Story ♡</h1>
+        <div class="timeline">
+          <div class="event reveal"><b>Oct 2022</b><br>Met — and it changed everything.</div>
+          <div class="event reveal"><b>March 2025</b><br>Best friendships began on that bench where we shared our first laughs, our biggest secrets, and countless memories</div>
+          <div class="event reveal"><b>1 Dec 2025</b><br>Bigger dreams, same team.</div>
+          <div class="event reveal"><b>2026</b><br>Still choosing you, always ♡</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 7 ADVENTURES -->
+  <section class="page paper-bg">
+    <div class="inner">
+      <div class="content">
+        <h1 class="script" style="text-align:center">Our Little Adventures ♡</h1>
+        <div class="polaroids">
+          <div class="polaroid a reveal"><img src="images/photo6.jpg" alt=""><span>same chaos</span></div>
+          <div class="polaroid b reveal"><img src="images/photo7.jpg" alt=""><span>better together</span></div>
+          <div class="polaroid c reveal"><img src="images/photo8.jpg" alt=""><span>more memories</span></div>
+          <div class="polaroid d reveal"><img src="images/photo9.jpg" alt=""><span>♡</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 8 LETTER -->
+  <section class="page paper-bg">
+    <div class="inner">
+      <div class="content">
+        <div class="letter reveal" id="letter"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 9 MUSIC -->
+  <section class="page dark">
+    <div class="inner center" style="background:#211816">
+      <div class="content">
+        <div class="sticker">🎧</div>
+        <h1 class="script">A little song<br>for us ♫</h1>
+        <div class="player">
+          <div style="font-size:29px">♡ Khayaal</div>
+          <div style="font-size:19px">Arijit Anand & Ankita Barwad</div>
+          <div class="song-frame">
+            <iframe
+              src="https://www.youtube.com/embed/8STNB6oSr-8?rel=0&modestbranding=1"
+              title="Khayaal — Arijit Anand & Ankita Barwad"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen></iframe>
+          </div>
+          <p class="tiny" style="margin:12px 0 0">Tap play ♡ The song is embedded from the official YouTube release.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 10 -->
+  <section class="page dark">
+    <div class="inner center">
+      <div class="content">
+        <div class="sticker sparkle">☾ ✦</div>
+        <h1 class="script">same sky<br>same dream<br>always you ♡</h1>
+        <p class="hand">Even from far away, it's still us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 11 -->
+  <section class="page paper-bg">
+    <div class="inner center">
+      <div class="content">
+        <div class="sticker">💌</div>
+        <h1 class="script">You're my favourite<br>notification ♡</h1>
+        <p class="hand">and yes, I'd choose your name popping up on my screen every time.</p>
+        <button class="primary" onclick="toast('A message from divyansh dhokebazz')">tap to read ♡</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 12 FINAL -->
+  <section class="page dark">
+    <div class="inner center">
+      <div class="content">
+        <img class="final-photo reveal" src="images/photo1.jpg" alt="Our favourite memory">
+        <h1 class="script">I'd still choose you. ♡</h1>
+        <p class="hand">Happy Boyfriends Day my unlimited jaljeera</p>
+        <p class="tiny">I love you. Always.</p>
+        <button class="primary" onclick="window.scrollTo({top:0,behavior:'smooth'});setTimeout(()=>{
+  document.getElementById("site").classList.remove("unlocked");
+  document.getElementById("site").classList.add("locked");
+  document.getElementById("gatePage").classList.remove("show");
+  openIntro();
+},700)">↻ replay</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<button class="music-button" id="musicButton" aria-label="Go to our song">♫</button>
+<button class="scroll-hint" onclick="window.scrollBy({top:window.innerHeight*.82,behavior:'smooth'})">↓</button>
+<div class="toast" id="toast"></div>
+
+<script>
+/* =========================
+   EDIT ONLY THIS SECTION
+   ========================= */
+const CONFIG={
+  secretCode:"0112",
+  yourName:"Me",
+  boyfriendName:"My Favourite Person",
+
+  // To use an animated sticker, put your GIF/WebP in /stickers
+  // and change the src in the WRONG PASSWORD / NO PAGE sections.
+  letter:`Dear Mimi,
+
+I don't even know where to start.
+
+You've made my life so much brighter, just by being in it.
+I'm so grateful for all the little things you do,
+for the way you love me, the laughter, the comfort,
+the endless support and for simply being you.
+
+I hope we get to make a million more memories together.
+
+I love you. Always.
+
+Love,
+{me} ♡`,
+
+  // Change this text if you want.
+  noMessage:"Sayyy YES otherwise I will kill you 😭💗"
+};
+/* ========================= */
+
+const intro=document.getElementById("intro");
+const boxes=[...document.querySelectorAll(".code-box")];
+const keypad=document.getElementById("keypad");
+const wrongPage=document.getElementById("wrongPage");
+let code="";
+
+"123456789*0#".split("").forEach(n=>{
+  const b=document.createElement("button");
+  b.textContent=n;b.onclick=()=>press(n);keypad.appendChild(b);
+});
+function press(n){
+  if(code.length>=CONFIG.secretCode.length)return;
+  code+=n;boxes[code.length-1].textContent="♥";
+}
+function resetCode(){code="";boxes.forEach(x=>x.textContent="")}
+document.getElementById("unlock").onclick=()=>{
+  if(code===CONFIG.secretCode){
+    intro.classList.add("hide");
+    document.getElementById("gatePage").classList.add("show");
+    resetCode();
+    window.scrollTo({top:0,behavior:"instant"});
+  }else{
+    resetCode();
+    openWrong();
+  }
+};
+
+document.getElementById("gateYes").onclick=()=>{
+  document.getElementById("gatePage").classList.remove("show");
+  document.getElementById("site").classList.remove("locked");
+  document.getElementById("site").classList.add("unlocked");
+  window.scrollTo({top:0,behavior:"instant"});
+  setTimeout(observeReveals,50);
+};
+
+document.getElementById("gateNo").onclick=()=>{
+  showNoPage();
+};
+function openWrong(){
+  wrongPage.classList.add("show");
+  document.body.style.overflow="hidden";
+}
+function closeWrong(){
+  wrongPage.classList.remove("show");
+  document.body.style.overflow="";
+}
+function openIntro(){
+  intro.classList.remove("hide");
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function showNoPage(){
+  document.getElementById("noPage")?.remove();
+  const sec=document.createElement("section");
+  sec.className="page no-page";
+  sec.id="noPage";
+  sec.style.cssText="position:fixed;inset:0;z-index:230;display:flex;min-height:100svh;";
+  sec.innerHTML=`
+    <div class="inner center reveal visible">
+      <div class="content">
+        <div class="custom-sticker">
+          <img src="stickers/no-sticker.gif" alt="cute forevermore penguin sticker">
+        </div>
+        <div class="threat">${CONFIG.noMessage}</div>
+        <button class="yes-btn" id="noPageYes">Okayyy YES ♡</button>
+      </div>
+    </div>`;
+  document.body.appendChild(sec);
+  document.getElementById("noPageYes").onclick=()=>{
+    sec.remove();
+    document.getElementById("gatePage").classList.remove("show");
+    document.getElementById("site").classList.remove("locked");
+    document.getElementById("site").classList.add("unlocked");
+    window.scrollTo({top:0,behavior:"instant"});
+    setTimeout(observeReveals,50);
+  };
+}
+document.getElementById("letter").innerHTML=
+`<h2>A letter for you... ♡</h2><div>${
+CONFIG.letter.replace("{boyfriend}",CONFIG.boyfriendName)
+.replace("{me}",CONFIG.yourName).replace(/\n/g,"<br>")
+}</div>`;
+const nameFinal=document.getElementById("nameFinal");
+if(nameFinal) nameFinal.textContent=CONFIG.boyfriendName;
+
+function toast(msg){
+  const t=document.getElementById("toast");
+  t.textContent=msg;t.classList.add("show");
+  clearTimeout(window.__toast);
+  window.__toast=setTimeout(()=>t.classList.remove("show"),2500);
+}
+
+/* Scroll reveal */
+let observer;
+function observeReveals(){
+  if(observer)observer.disconnect();
+  observer=new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")});
+  },{threshold:.13});
+  document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+}
+observeReveals();
+
+/* Keyboard */
+document.addEventListener("keydown",e=>{
+  if(e.key==="ArrowDown"||e.key==="PageDown"){e.preventDefault();window.scrollBy({top:window.innerHeight*.82,behavior:"smooth"})}
+  if(e.key==="ArrowUp"||e.key==="PageUp"){e.preventDefault();window.scrollBy({top:-window.innerHeight*.82,behavior:"smooth"})}
+  if(/^[0-9*#]$/.test(e.key)&&!intro.classList.contains("hide"))press(e.key);
+  if(e.key==="Enter"&&!intro.classList.contains("hide"))document.getElementById("unlock").click();
+});
+</script>
+</body>
+</html>
